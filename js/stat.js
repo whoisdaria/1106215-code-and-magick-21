@@ -5,23 +5,27 @@ var CLOUD_Y = 10;
 var GAP = 50;
 var BAR_WIDTH = 40;
 var FONT_Y = 270;
-var maxBarWidth = 150;
+var MAX_BAR_HEIGHT = 150;
 
 var renderCloud = (ctx, x, y, color) => {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 };
 
-var getMaxElement = function(arr) {
-  var maxElement = arr[0];
+var getMaxElement = function(elements) {
+  var maxElement = elements[0];
 
-  for (var i = 1; i < arr.length; i++) {
-    if (arr[i] > maxElement) {
-      maxElement = arr[i];
+  for (var i = 1; i < elements.length; i++) {
+    if (elements[i] > maxElement) {
+      maxElement = elements[i];
     }
   }
   return maxElement;
 };
+
+var getRandomNumber = (min, max) => {
+  return Math.floor(min + Math.random() * (max + 1 - min));
+}
 
 window.renderStatistics = function(ctx, names, times) {
   renderCloud(ctx, 110, 20, 'rgba(0, 0, 0, 0.7)');
@@ -32,18 +36,20 @@ window.renderStatistics = function(ctx, names, times) {
   ctx.fillText('Ура вы победили!', CLOUD_X + GAP, 40);
   ctx.fillText('Список результатов:', CLOUD_X + GAP, 60);
 
-  var maxTime = getMaxElement(times);
-
   for (var i = 0; i < names.length; i++) {
-    if (names[i] === 'Вы') {
-      ctx.fillStyle = 'rgb(255, 0, 0)';
-    } else {
-      ctx.fillStyle = 'hsl(240, ' + 10 * i + '% , 50%)';
-    }
-    ctx.fillRect(CLOUD_X + GAP + (BAR_WIDTH + GAP) * i, 100 + (maxBarWidth - (maxBarWidth * times[i]) / maxTime), BAR_WIDTH, (maxBarWidth * times[i]) / maxTime);
+    var maxTime = getMaxElement(times);
+    var BAR_HEIGHT = (MAX_BAR_HEIGHT * times[i]) / maxTime;
+    var ELEMENT_X = CLOUD_X + GAP + (BAR_WIDTH + GAP) * i;
+    var saturation = getRandomNumber(1, 100);
+
+    names[i] === 'Вы'
+    ? ctx.fillStyle = 'rgb(255, 0, 0)'
+    : ctx.fillStyle = 'hsl(240, ' + saturation + '% , 50%)';
+
+    ctx.fillRect(ELEMENT_X, 100 + (MAX_BAR_HEIGHT - BAR_HEIGHT), BAR_WIDTH, BAR_HEIGHT);
 
     ctx.fillStyle = '#000';
-    ctx.fillText(Math.round(times[i]), CLOUD_X + GAP + (BAR_WIDTH + GAP) * i, 90 + (maxBarWidth - (maxBarWidth * times[i]) / maxTime), BAR_WIDTH, (maxBarWidth * times[i]) / maxTime)
-    ctx.fillText(names[i], CLOUD_X + GAP + (BAR_WIDTH + GAP) * i, FONT_Y);
+    ctx.fillText(Math.round(times[i]), ELEMENT_X, 90 + (MAX_BAR_HEIGHT - BAR_HEIGHT), BAR_WIDTH, BAR_HEIGHT)
+    ctx.fillText(names[i], ELEMENT_X, FONT_Y);
   }
 }
