@@ -39,15 +39,15 @@ window.renderStatistics = function (ctx, names, times) {
 
   for (var i = 0; i < names.length; i++) {
     var maxTime = getMaxElement(times);
-    var BAR_HEIGHT = (MAX_BAR_HEIGHT * times[i]) / maxTime;
-    var ELEMENT_X = CLOUD_X + GAP + (BAR_WIDTH + GAP) * i;
+    var barHeight = (MAX_BAR_HEIGHT * times[i]) / maxTime;
+    var elementX = CLOUD_X + GAP + (BAR_WIDTH + GAP) * i;
     var saturation = getRandomNumber(1, 100);
 
-    names[i] === 'Вы' ? ctx.fillStyle = 'rgb(255, 0, 0)' : ctx.fillStyle = 'hsl(240, ' + saturation + '% , 50%)';
-    ctx.fillRect(ELEMENT_X, 100 + (MAX_BAR_HEIGHT - BAR_HEIGHT), BAR_WIDTH, BAR_HEIGHT);
+    ctx.fillStyle = names[i] === 'Вы' ? 'rgb(255, 0, 0)' : ctx.fillStyle = 'hsl(240, ' + saturation + '% , 50%)';
+    ctx.fillRect(elementX, 100 + (MAX_BAR_HEIGHT - barHeight), BAR_WIDTH, barHeight);
 
     ctx.fillStyle = '#000';
-    ctx.fillText(Math.round(times[i]), ELEMENT_X, 90 + (MAX_BAR_HEIGHT - BAR_HEIGHT), BAR_WIDTH, BAR_HEIGHT);
-    ctx.fillText(names[i], ELEMENT_X, FONT_Y);
+    ctx.fillText(Math.round(times[i]), elementX, 90 + (MAX_BAR_HEIGHT - barHeight), BAR_WIDTH, barHeight);
+    ctx.fillText(names[i], elementX, FONT_Y);
   }
 };
