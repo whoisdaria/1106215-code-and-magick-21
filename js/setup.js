@@ -12,7 +12,10 @@ var wizards = [];
 
 var fragment = document.createDocumentFragment();
 
-var getRandomIndex = (elements) => getRandomNumber(0, elements.length-1);
+var getRandomNumber = (min, max) => {
+  return Math.floor(min + Math.random() * (max + 1 - min));
+};
+var getRandomIndex = (elements) => getRandomNumber(0, elements.length - 1);
 
 var createData = (elementsQuantity) => {
   for (var i = 0; i < elementsQuantity; i++) {
@@ -21,25 +24,25 @@ var createData = (elementsQuantity) => {
     wizard.coatColor = COAT_COLORS[getRandomIndex(COAT_COLORS)];
     wizard.eyesColor = EYES_COLORS[getRandomIndex(EYES_COLORS)];
 
-    wizards.push(wizard)
+    wizards.push(wizard);
   }
-}
+};
 createData(ELEMENTS_QUANTITY);
 
-var renderWizard = function(wizard) {
+var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
   wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
   wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
   wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
 
   return wizardElement;
-}
+};
 
 var renderFragment = (elements) => {
   for (var i = 0; i < elements.length; i++) {
     fragment.appendChild(renderWizard(elements[i]));
   }
-}
+};
 
 renderFragment(wizards);
 
