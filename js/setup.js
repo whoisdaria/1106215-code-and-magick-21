@@ -26,8 +26,6 @@ var createData = (ELEMENTS_QUANTITY) => {
 }
 createData(ELEMENTS_QUANTITY);
 
-console.log(wizards)
-
 var renderWizard = function(wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
   wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
