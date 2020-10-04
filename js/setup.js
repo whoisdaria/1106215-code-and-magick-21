@@ -14,8 +14,8 @@ var fragment = document.createDocumentFragment();
 
 var getRandomIndex = (elements) => getRandomNumber(0, elements.length-1);
 
-var createData = (ELEMENTS_QUANTITY) => {
-  for (var i = 0; i < ELEMENTS_QUANTITY; i++) {
+var createData = (elementsQuantity) => {
+  for (var i = 0; i < elementsQuantity; i++) {
     var wizard = {};
     wizard.name = FIRST_NAMES[getRandomIndex(FIRST_NAMES)] + ' ' + LAST_NAMES[getRandomIndex(LAST_NAMES)];
     wizard.coatColor = COAT_COLORS[getRandomIndex(COAT_COLORS)];
